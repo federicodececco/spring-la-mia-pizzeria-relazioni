@@ -2,12 +2,16 @@ package org.spring_la_mia_pizzeria.model;
 
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -37,11 +41,15 @@ public class Pizza {
     @Min(value = 0, message = "price cannot be negative")
     private Double price;
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", cascade = { CascadeType.REMOVE })
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", cascade = { CascadeType.REMOVE })
     private List<SpecialOffer> specialOffers;
+
+    @ManyToMany()
+    @JoinTable(name = "ingredient_pizza", joinColumns = @JoinColumn(name = "pizza_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    private List<Ingredient> ingredients;
 
     /* constructors */
     public Pizza(int id, String name, String description, String photoUrl, Double price) {
@@ -86,6 +94,10 @@ public class Pizza {
         return specialOffers;
     }
 
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -104,6 +116,10 @@ public class Pizza {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     @Override

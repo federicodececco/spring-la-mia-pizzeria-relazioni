@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <title>Pizza</title>
+
+  <div th:replace="~{fragments/resources :: head}"></div>
+</head>
+
+<body>
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  <main class="container">
+    <div class="mb-3 d-flex">
+      <a th:href="@{/ingredients/create}" class="me-auto btn btn-primary btn-sm" href="">
+        Aggiungi un ingrediente
+      </a>
+    </div>
+    <div class="container">
+
+      <h1>Ingredienti</h1>
+      <table th:if="${ingredients.size>0}" class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>nome</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="ingredient : ${ingredients}" th:object="${ingredient}">
+            <td>[[*{name}]]</td>
+            <td>[[*{id}]]</td>
+
+            <td>
+              <form th:action="@{/ingredients/{id}/edit(id=${ingredient.id})}" method="get">
+                <button type="submit" class="btn btn-warning btn-sm">Modifica </button>
+              </form>
+            </td>
+            <td>
+              <form th:action="@{/ingredients/{id}/delete(id=${ingredient.id})}" method="post">
+                <button type="submit" class="btn btn-danger btn-sm">Rimuovi</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 th:unless="${ingredients.size>0} ">There are no ingredietns?</h2>
+    </div>
+
+    <div th:replace="~{fragments/resources :: scripts}"></div>
+  </main>
+</body>
+
+</html>

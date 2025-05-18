@@ -29,6 +29,12 @@
 
       </tbody>
     </table>
+    <div class="container">
+      <h3>Ingredienti:</h3>
+      <div class="row">
+        <p class="col-2" th:each="ingredient : ${ingredients}" th:text="${ingredient.name}"></p>
+      </div>
+    </div>
     <a th:href="@{/offers/{id}/create(id=${id})}" class="btn btn-primary btn-sm ">Crea un'offerta</a>
     <section th:unless="*{specialOffers.size < 1}" class="row mb-3">
       <div class="container">
@@ -38,6 +44,7 @@
               <td>Nome</td>
               <td>Data d'inizio</td>
               <td>Data di fine</td>
+              <td></td>
               <td></td>
             </tr>
           </thead>
@@ -49,6 +56,10 @@
               <td>
                 <form th:action="@{/offers/edit/{id}(id=${offer.id})}"> <button type="submit"
                     class="btn btn-warning btn-sm">Modifica</button></form>
+              </td>
+              <td>
+                <form th:action="@{/offers/delete/{id}(id=${offer.id})}" method="post"> <button type="submit"
+                    class="btn btn-danger btn-sm">cancella</button></form>
               </td>
             </tr>
           </tbody>

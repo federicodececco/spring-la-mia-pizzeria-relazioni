@@ -1,10 +1,9 @@
 package org.spring_la_mia_pizzeria.controller;
 
-import org.spring_la_mia_pizzeria.repository.OrderRepository;
 import org.spring_la_mia_pizzeria.repository.PizzaRepository;
 import org.spring_la_mia_pizzeria.repository.SpecialOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.rsocket.RSocketProperties.Server.Spec;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +17,6 @@ import jakarta.validation.Valid;
 
 import org.spring_la_mia_pizzeria.model.*;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/offers")
@@ -73,6 +71,13 @@ public class SpecialOfferController {
 
         offerRepository.save(formOffer);
         return "redirect:/";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Integer id, Model model) {
+        Pizza pizza = offerRepository.findById(id).get().getPizza();
+        offerRepository.deleteById(id);
+        return "redirect:/" + pizza.getId();
     }
 
 }

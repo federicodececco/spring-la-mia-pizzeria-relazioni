@@ -22,37 +22,44 @@
           </div>
         </div>
         <div class="mb-3">
-          <label class="form-label" for="description">Description: </label>
-          <textarea class="form-control" type="text" id="description" th:field="*{description}"
-            th:errorClass="is-invalid"></textarea>
-          <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
-            <ul>
-              <li th:each="error : ${#fields.errors('description')}" th:text="${error}" />
-            </ul>
+          <div class="single-category form-check" th:each="ingredient : ${ingredients}">
+            <input type="checkbox" id="|ingredient-${ingredient.id}|" th:field="${pizza.ingredients}"
+              th:value="${ingredient.id}">
+            <label class="form-label" for="|ingredient-${ingredient.id}|" th:text="${ingredient.name}"></label>
           </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="photoUrl">Image Url: </label>
-          <input class="form-control" type="text" id="photoUrl" th:field="*{photoUrl}" th:errorClass="is-invalid" />
-          <div class="invalid-feedback" th:if="${#fields.hasErrors('photoUrl')}">
-            <ul>
-              <li th:each="error : ${#fields.errors(name)}" th:text="${photoUrl}" />
-            </ul>
+
+          <div class="mb-3">
+            <label class="form-label" for="description">Description: </label>
+            <textarea class="form-control" type="text" id="description" th:field="*{description}"
+              th:errorClass="is-invalid"></textarea>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}">
+              <ul>
+                <li th:each="error : ${#fields.errors('description')}" th:text="${error}" />
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="mb-3">
-          <label class="form-label" for="price">Price: </label>
-          <input class="form-control" type="number" id="price" th:field="*{price}" th:errorClass="is-invalid" />
-          <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
-            <ul>
-              <li th:each="error : ${#fields.errors('price')}" th:text="${error}" />
-            </ul>
+          <div class="mb-3">
+            <label class="form-label" for="photoUrl">Image Url: </label>
+            <input class="form-control" type="text" id="photoUrl" th:field="*{photoUrl}" th:errorClass="is-invalid" />
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('photoUrl')}">
+              <ul>
+                <li th:each="error : ${#fields.errors(name)}" th:text="${photoUrl}" />
+              </ul>
+            </div>
           </div>
-        </div>
-        <div class="mb-3 d-flex justify-content-between">
-          <input type="submit" value="Invia" class="btn btn-primary" />
-          <input type="reset" value="Cancella" class="btn btn-warning" />
-        </div>
+          <div class="mb-3">
+            <label class="form-label" for="price">Price: </label>
+            <input class="form-control" type="number" id="price" th:field="*{price}" th:errorClass="is-invalid" />
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('price')}">
+              <ul>
+                <li th:each="error : ${#fields.errors('price')}" th:text="${error}" />
+              </ul>
+            </div>
+          </div>
+          <div class="mb-3 d-flex justify-content-between">
+            <input type="submit" value="Invia" class="btn btn-primary" />
+            <input type="reset" value="Cancella" class="btn btn-warning" />
+          </div>
       </form>
     </h2>
   </div>
