@@ -9,7 +9,9 @@
 <body th:object="${pizza}">
   <div th:replace="~{fragments/navbar :: navbar}"></div>
   <div class="container">
-    <h1>Pizze</h1>
+    <div>
+      <h1 class="">Pizze</h1>
+    </div>
     <table class="table">
       <thead>
         <tr>
@@ -27,7 +29,33 @@
 
       </tbody>
     </table>
-    <section class="row mb-3">
+    <a th:href="@{/offers/{id}/create(id=${id})}" class="btn btn-primary btn-sm ">Crea un'offerta</a>
+    <section th:unless="*{specialOffers.size < 1}" class="row mb-3">
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <td>Nome</td>
+              <td>Data d'inizio</td>
+              <td>Data di fine</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="offer: *{specialOffers}" th:object="${offer}">
+              <td>[[*{title}]]</td>
+              <td>[[*{startDate}]]</td>
+              <td>[[*{endDate}]]</td>
+              <td>
+                <form th:action="@{/offers/edit/{id}(id=${offer.id})}"> <button type="submit"
+                    class="btn btn-warning btn-sm">Modifica</button></form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section class="row mb-3" th:unless="*{orders.size < 1}">
       <div class="container">
         <table class="table">
           <thead>
@@ -36,6 +64,7 @@
               <th>Ora di Consegna</th>
             </tr>
           </thead>
+
           <tr th:each="order : *{orders}" th:object="${order}">
             <td>[[*{orderTime}]]</td>
             <td>[[*{deliveryTime}]]</td>

@@ -34,7 +34,7 @@ public class SpecialOffer {
     private String title;
 
     @NotNull(message = "start date cannot be null")
-    @Past(message = "the offer cannot start in the past")
+    // @PastOrPresent(message = "the offer cannot start in the past")
     private LocalDate startDate;
 
     private LocalDate endDate;
@@ -62,7 +62,7 @@ public class SpecialOffer {
         return title;
     }
 
-    public LocalDate getStarDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 

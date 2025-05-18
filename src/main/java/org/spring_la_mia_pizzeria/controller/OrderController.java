@@ -26,6 +26,6 @@ public class OrderController {
             return "orders/create";
         }
         repository.save(formOrder);
-        return "redirect:/pizzas/" + formOrder.getPizza().getId();
+        return "redirect:/" + formOrder.getPizza().getId();
     }
 }

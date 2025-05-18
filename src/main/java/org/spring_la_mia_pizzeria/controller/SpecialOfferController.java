@@ -1,7 +1,10 @@
 package org.spring_la_mia_pizzeria.controller;
 
+import org.spring_la_mia_pizzeria.repository.OrderRepository;
+import org.spring_la_mia_pizzeria.repository.PizzaRepository;
 import org.spring_la_mia_pizzeria.repository.SpecialOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.rsocket.RSocketProperties.Server.Spec;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +27,9 @@ public class SpecialOfferController {
     @Autowired
     private SpecialOfferRepository offerRepository;
 
+    @Autowired
+    private PizzaRepository pizzaRepository;
+
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
 
@@ -31,9 +37,12 @@ public class SpecialOfferController {
         return "offers/show";
     }
 
-    @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("offer", new SpecialOffer());
+    @GetMapping("/{id}/create")
+    public String create(Model model, @PathVariable("id") Integer id) {
+
+        SpecialOffer offer = new SpecialOffer();
+        offer.setPizza(pizzaRepository.findById(id).get());
+        model.addAttribute("offer", offer);
         return "offers/create";
     }
 
@@ -45,7 +54,25 @@ public class SpecialOfferController {
             return "offers/create";
         }
         offerRepository.save(formOffer);
-        return "redirect:/pizza/" + formOffer.getPizza().getId();
+        return "redirect:/" + formOffer.getPizza().getId();
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("offer", offerRepository.findById(id).get());
+
+        return "offers/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String edit(@Valid @ModelAttribute("offer") SpecialOffer formOffer, BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            return "offers/edit";
+        }
+
+        offerRepository.save(formOffer);
+        return "redirect:/";
     }
 
 }
