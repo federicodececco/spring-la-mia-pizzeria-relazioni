@@ -40,6 +40,9 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza")
     private List<Order> orders;
 
+    @OneToMany(mappedBy = "pizza")
+    private List<SpecialOffer> specialOffers;
+
     /* constructors */
     public Pizza(int id, String name, String description, String photoUrl, Double price) {
         this.id = id;
@@ -77,6 +80,10 @@ public class Pizza {
 
     public List<Order> getOrders() {
         return orders;
+    }
+
+    public List<SpecialOffer> getSpecialOffers() {
+        return specialOffers;
     }
 
     public void setDescription(String description) {
