@@ -1,0 +1,56 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <title>Pizza</title>
+  <div th:replace="~{fragments/resources :: head}"></div>
+</head>
+
+<body>
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  <div class="container text-center">
+    <h1>Creazione di un ordine con la pizza [[${order.pizza.name}]] </h1>
+    <h2>
+      <form id="pizza-form" th:action="@{/orders/create}" method="post" th:object="${order}">
+        <input type="hidden" th:field="*{pizza}" id="linked-pizza">
+        <div class="mb-3">
+          <label class="form-label" for="orderTime">Ora di Ordinazione: </label>
+          <input class="form-control" type="time" id="orderTime" th:field="*{orderTime}" th:errorClass="is-invalid" />
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('orderTime')}">
+            <ul>
+              <li th:each="error : ${#fields.errors('orderTime')}" th:text="${error}" />
+            </ul>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="deliveryTime">Ora di Consegna: </label>
+          <input class="form-control" type="time" id="deliveryTime" th:field="*{deliveryTime}"
+            th:errorClass="is-invalid"></input>
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('deliveryTime')}">
+            <ul>
+              <li th:each="error : ${#fields.errors('deliveryTime')}" th:text="${error}" />
+            </ul>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="notes">Note: </label>
+          <textarea class="form-control" type="text" id="notes" th:field="*{notes}" th:errorClass="is-invalid" />
+          <div class="invalid-feedback" th:if="${#fields.hasErrors('notes')}">
+            <ul>
+              <li th:each="error : ${#fields.errors(name)}" th:text="${notes}" />
+            </ul>
+          </div>
+        </div>
+
+        <div class="mb-3 d-flex justify-content-between">
+          <input type="submit" value="Invia" class="btn btn-primary" />
+          <input type="reset" value="Cancella" class="btn btn-warning" />
+        </div>
+      </form>
+    </h2>
+  </div>
+
+  <div th:replace="~{fragments/resources :: scripts}"></div>
+</body>
+
+</html>

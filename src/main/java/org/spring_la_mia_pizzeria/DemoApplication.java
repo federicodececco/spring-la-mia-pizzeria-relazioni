@@ -1,4 +1,4 @@
-package org.spring_la_mia_pizzeria.demo;
+package org.spring_la_mia_pizzeria;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

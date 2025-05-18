@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <title>Pizza</title>
+  <div th:replace="~{fragments/resources :: head}"></div>
+</head>
+
+<body th:object="${pizza}">
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+  <div class="container">
+    <h1>Pizze</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Descrizione</th>
+          <th>prezzo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>[[*{name}]]</td>
+          <td>[[*{description}]]</td>
+          <td>[[*{price}]]</td>
+        </tr>
+
+      </tbody>
+    </table>
+    <section class="row mb-3">
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Ora di ordinazione</th>
+              <th>Ora di Consegna</th>
+            </tr>
+          </thead>
+          <tr th:each="order : *{orders}" th:object="${order}">
+            <td>[[*{orderTime}]]</td>
+            <td>[[*{deliveryTime}]]</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+
+  <div th:replace="~{fragments/resources :: scripts}"></div>
+</body>
+
+</html>
